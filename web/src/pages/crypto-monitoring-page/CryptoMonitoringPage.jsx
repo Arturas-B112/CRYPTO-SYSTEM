@@ -9,6 +9,7 @@ const CryptoMonitoringPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [errorText, setErrorText] = useState('');
+  const [refreshInterval, setRefreshInterval] = useState(0);
 
   const navigate = useNavigate();
 
@@ -28,7 +29,10 @@ const CryptoMonitoringPage = () => {
 
   useEffect(() => {
     fetchCurrencies();
-  }, []);
+    setTimeout(() => {
+      setRefreshInterval((count) => count + 1);
+    }, 120000);
+  }, [refreshInterval]);
 
   const handleInputChange = (e, newValue) => {
     if (newValue.length <= 30) {
@@ -55,7 +59,7 @@ const CryptoMonitoringPage = () => {
           getOptionLabel={(currency) => currency.name}
           onChange={(e, currency) => {
             if (currency) {
-              navigate(`/coins/${currency.id}`, { state: { currency } });
+              navigate(`/coins/${currency.id}`);
             }
           }}
           inputValue={inputValue}
@@ -74,12 +78,7 @@ const CryptoMonitoringPage = () => {
         />
       </Stack>
       {isLoading && <LinearProgress />}
-      <CryptoTable
-        currencies={currencies}
-        onDetails={(currency) => {
-          navigate(`/coins/${currency.id}`, { state: { currency } });
-        }}
-      />
+      <CryptoTable currencies={currencies} />
     </>
   );
 };
