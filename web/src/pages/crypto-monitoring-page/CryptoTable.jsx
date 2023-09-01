@@ -2,9 +2,12 @@ import { Button, Pagination, Stack } from '@mui/material';
 import './CryptoTable.scss';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { CryptoState } from '../../CryptoContext';
 
-const CryptoTable = ({ currencies, onDetails }) => {
+const CryptoTable = ({ currencies }) => {
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { symbol } = CryptoState();
 
   const totalPages = Math.ceil(currencies.length / 10);
 
@@ -30,8 +33,13 @@ const CryptoTable = ({ currencies, onDetails }) => {
           {currencies.slice(startIndex, endIndex).map((currency) => (
             <tr key={currency.id}>
               <td>{currency.market_cap_rank}</td>
-              <td>{` ${currency.name} / ${currency.symbol}`}</td>
-              <td>{`$ ${currency.current_price}`}</td>
+              <td>
+                <Stack direction="row" alignItems="center" gap={2}>
+                  <img src={currency.image} alt="Coin image" />
+                  {`${currency.name} / ${currency.symbol}`}
+                </Stack>
+              </td>
+              <td>{`${symbol} ${currency.current_price}`}</td>
               <td>
                 <Button variant="outlined">
                   <Link to={`/coins/${currency.id}`}>Details</Link>

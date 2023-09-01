@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
-import { getCrypto } from '../../api';
+import { getAllCoins } from '../../api';
 import CryptoTable from './CryptoTable';
-import { Autocomplete, LinearProgress, Stack, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  LinearProgress,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { CryptoState } from '../../CryptoContext';
 
 const CryptoMonitoringPage = () => {
   const [currencies, setCurrencies] = useState([]);
@@ -11,13 +19,15 @@ const CryptoMonitoringPage = () => {
   const [errorText, setErrorText] = useState('');
   const [refreshInterval, setRefreshInterval] = useState(0);
 
+  const { currency, setCurrency } = CryptoState();
+
   const navigate = useNavigate();
 
   const fetchCurrencies = async () => {
     try {
       setIsLoading(true);
 
-      const { data } = await getCrypto();
+      const { data } = await getAllCoins(currency);
 
       setCurrencies(data);
     } catch (error) {
@@ -32,7 +42,7 @@ const CryptoMonitoringPage = () => {
     setTimeout(() => {
       setRefreshInterval((count) => count + 1);
     }, 120000);
-  }, [refreshInterval]);
+  }, [refreshInterval, currency]);
 
   const handleInputChange = (e, newValue) => {
     if (newValue.length <= 30) {
@@ -52,7 +62,7 @@ const CryptoMonitoringPage = () => {
 
   return (
     <>
-      <Stack direction="row" gap={1} mx={2}>
+      <Stack direction="row" justifyContent="space-between" gap={1} mx={2}>
         <Autocomplete
           freeSolo
           options={currencies}
@@ -76,6 +86,10 @@ const CryptoMonitoringPage = () => {
             />
           )}
         />
+        <Select value={currency} onChange={(e) => setCurrency(e.target.value)}>
+          <MenuItem value={'USD'}>USD</MenuItem>
+          <MenuItem value={'EUR'}>EUR</MenuItem>
+        </Select>
       </Stack>
       {isLoading && <LinearProgress />}
       <CryptoTable currencies={currencies} />
