@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 const CoinsCarousel = () => {
   const [trendingCoins, setTrendingCoins] = useState([]);
+  const [refreshInterval, setRefreshInterval] = useState(0);
 
   const { currency } = CryptoState();
 
@@ -24,13 +25,16 @@ const CoinsCarousel = () => {
 
   useEffect(() => {
     fetchTrendingCoins();
-  }, [currency]);
+    setTimeout(() => {
+      setRefreshInterval((count) => count + 1);
+    }, 120000);
+  }, [refreshInterval, currency]);
 
   const items = trendingCoins.map((coin) => {
     return (
       <Link to={`/coins/${coin.id}`}>
-        <Stack gap={1} mt={5} alignItems="center">
-          <img src={coin.image} alt="Coin logo" style={{ width: '50%' }} />
+        <Stack gap={1} my={5} alignItems="center">
+          <img src={coin.image} alt="Coin logo" style={{ height: '120px' }} />
           <Typography>{coin.name}</Typography>
           <Typography
             style={{
@@ -48,7 +52,7 @@ const CoinsCarousel = () => {
     0: {
       items: 2,
     },
-    512: {
+    580: {
       items: 4,
     },
   };
@@ -65,6 +69,7 @@ const CoinsCarousel = () => {
         animationDuration={1500}
         responsive={responsive}
         disableDotsControls
+        disableButtonsControls
         autoPlay
         items={items}
       />
