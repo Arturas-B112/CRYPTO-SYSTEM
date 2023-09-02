@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { CryptoState } from '../../CryptoContext';
 
 const CryptoMonitoringPage = () => {
-  const [currencies, setCurrencies] = useState([]);
+  const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -29,7 +29,7 @@ const CryptoMonitoringPage = () => {
 
       const { data } = await getAllCoins(currency);
 
-      setCurrencies(data);
+      setCoins(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -50,7 +50,7 @@ const CryptoMonitoringPage = () => {
     }
 
     if (
-      !currencies.some((currency) =>
+      !coins.some((currency) =>
         currency.name.toLowerCase().includes(newValue.toLowerCase())
       )
     ) {
@@ -65,7 +65,7 @@ const CryptoMonitoringPage = () => {
       <Stack direction="row" justifyContent="space-between" gap={1} mx={2}>
         <Autocomplete
           freeSolo
-          options={currencies}
+          options={coins}
           getOptionLabel={(currency) => currency.name}
           onChange={(e, currency) => {
             if (currency) {
@@ -92,7 +92,7 @@ const CryptoMonitoringPage = () => {
         </Select>
       </Stack>
       {isLoading && <LinearProgress />}
-      <CryptoTable currencies={currencies} />
+      <CryptoTable coins={coins} />
     </>
   );
 };

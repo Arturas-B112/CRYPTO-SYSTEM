@@ -4,15 +4,15 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CryptoState } from '../../CryptoContext';
 
-const CryptoTable = ({ currencies }) => {
+const CryptoTable = ({ coins }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { symbol } = CryptoState();
 
-  const totalPages = Math.ceil(currencies.length / 10);
+  const totalPages = Math.ceil(coins.length / 10);
 
   const startIndex = (currentPage - 1) * 10;
-  const endIndex = Math.min(startIndex + 10, currencies.length);
+  const endIndex = Math.min(startIndex + 10, coins.length);
 
   const handlePageChange = (e, newPage) => {
     setCurrentPage(newPage);
@@ -30,19 +30,19 @@ const CryptoTable = ({ currencies }) => {
           </tr>
         </thead>
         <tbody>
-          {currencies.slice(startIndex, endIndex).map((currency) => (
-            <tr key={currency.id}>
-              <td>{currency.market_cap_rank}</td>
+          {coins.slice(startIndex, endIndex).map((coin) => (
+            <tr key={coin.id}>
+              <td>{coin.market_cap_rank}</td>
               <td>
                 <Stack direction="row" alignItems="center" gap={2}>
-                  <img src={currency.image} alt="Coin image" />
-                  {`${currency.name} / ${currency.symbol}`}
+                  <img src={coin.image} alt="Coin image" />
+                  {`${coin.name} / ${coin.symbol}`}
                 </Stack>
               </td>
-              <td>{`${symbol} ${currency.current_price}`}</td>
+              <td>{`${symbol} ${coin.current_price}`}</td>
               <td>
                 <Button variant="outlined">
-                  <Link to={`/coins/${currency.id}`}>Details</Link>
+                  <Link to={`/coins/${coin.id}`}>Details</Link>
                 </Button>
               </td>
             </tr>
