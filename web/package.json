@@ -15,7 +15,9 @@
     "@mui/material": "^5.14.7",
     "axios": "^1.5.0",
     "react": "^18.2.0",
+    "react-alice-carousel": "^2.7.1",
     "react-dom": "^18.2.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.15.0",
     "sass": "^1.66.1"
   },

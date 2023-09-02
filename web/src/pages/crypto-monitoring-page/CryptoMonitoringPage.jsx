@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { CryptoState } from '../../CryptoContext';
+import CoinsCarousel from '../../components/coins-carousel/CoinsCarousel';
 
 const CryptoMonitoringPage = () => {
   const [coins, setCoins] = useState([]);
@@ -23,7 +24,7 @@ const CryptoMonitoringPage = () => {
 
   const navigate = useNavigate();
 
-  const fetchCurrencies = async () => {
+  const fetchAllCoins = async () => {
     try {
       setIsLoading(true);
 
@@ -38,7 +39,7 @@ const CryptoMonitoringPage = () => {
   };
 
   useEffect(() => {
-    fetchCurrencies();
+    fetchAllCoins();
     setTimeout(() => {
       setRefreshInterval((count) => count + 1);
     }, 120000);
@@ -62,7 +63,13 @@ const CryptoMonitoringPage = () => {
 
   return (
     <>
-      <Stack direction="row" justifyContent="space-between" gap={1} mx={2}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        gap={1}
+        mx={2}
+        my={2}
+      >
         <Autocomplete
           freeSolo
           options={coins}
@@ -92,6 +99,7 @@ const CryptoMonitoringPage = () => {
         </Select>
       </Stack>
       {isLoading && <LinearProgress />}
+      <CoinsCarousel />
       <CryptoTable coins={coins} />
     </>
   );
