@@ -12,6 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { CryptoState } from '../../CryptoContext';
 import CoinsCarousel from '../../components/coins-carousel/CoinsCarousel';
+import CurrencySelector from '../../components/currency-selector/CurrencySelector';
 
 const CryptoMonitoringPage = () => {
   const [coins, setCoins] = useState([]);
@@ -20,7 +21,7 @@ const CryptoMonitoringPage = () => {
   const [errorText, setErrorText] = useState('');
   const [refreshInterval, setRefreshInterval] = useState(0);
 
-  const { currency, setCurrency } = CryptoState();
+  const { currency } = CryptoState();
 
   const navigate = useNavigate();
 
@@ -93,10 +94,7 @@ const CryptoMonitoringPage = () => {
             />
           )}
         />
-        <Select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-          <MenuItem value={'USD'}>USD</MenuItem>
-          <MenuItem value={'EUR'}>EUR</MenuItem>
-        </Select>
+        <CurrencySelector />
       </Stack>
       {isLoading && <LinearProgress />}
       <CoinsCarousel />
