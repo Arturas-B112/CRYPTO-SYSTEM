@@ -1,11 +1,20 @@
 import { RouterProvider } from 'react-router-dom';
 import { routes } from './routes';
 import './App.scss';
+import { ThemeProvider, createTheme } from '@mui/material';
 
 const App = () => {
+  let theme = createTheme({
+    typography: {
+      fontFamily: ['"Kanit"', 'sans-serif'].join(','),
+    },
+  });
+
   return (
     <>
-      <RouterProvider router={routes} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={routes} />
+      </ThemeProvider>
     </>
   );
 };
