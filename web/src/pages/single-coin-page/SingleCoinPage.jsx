@@ -5,6 +5,7 @@ import { LinearProgress, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Stack } from '@mui/material';
 import CurrencySelector from '../../components/currency-selector/CurrencySelector';
+import SingleCoinChart from './SingleCoinChart';
 
 const SingleCoinPage = () => {
   const { id } = useParams();
@@ -38,33 +39,43 @@ const SingleCoinPage = () => {
       </Stack>
 
       {isLoading && <LinearProgress />}
-      <Stack direction={{ xs: 'column', md: 'row' }} my={2} mx={2}>
-        <Stack alignItems="center" spacing={2}>
-          <img
-            src={coin?.image.large}
-            alt="Coin logo"
-            style={{ width: '50%' }}
-          />
-          <Typography variant="h4">{coin?.name}</Typography>
-          <Stack>
-            <Typography variant="h5">
-              Current Price:{' '}
-              {coin?.market_data.current_price[currency.toLowerCase()]} {symbol}
-            </Typography>
-            <Typography variant="h5">
-              Market Cap:{' '}
-              {coin?.market_data.market_cap[currency.toLowerCase()]
-                .toString()
-                .slice(0, -6)}
-              M {symbol}
-            </Typography>
-            <Typography variant="h5">
-              Total Supply: {coin?.market_data.total_supply.toFixed(2)}{' '}
-              {coin?.symbol}
-            </Typography>
+      {coin && (
+        <Stack
+          direction={{ xs: 'column', md: 'row' }}
+          my={2}
+          mx={{ xs: 2, md: 8 }}
+          spacing={4}
+        >
+          <Stack spacing={2} alignItems="center">
+            <img
+              src={coin.image.large}
+              alt="Coin logo"
+              style={{ maxwidth: '50%' }}
+            />
+            <Typography variant="h4">{coin.name}</Typography>
+            <Stack>
+              <Typography variant="h5">
+                Current Price:{' '}
+                {coin.market_data.current_price[currency.toLowerCase()]}{' '}
+                {symbol}
+              </Typography>
+              <Typography variant="h5">
+                Market Cap:{' '}
+                {coin.market_data.market_cap[currency.toLowerCase()]
+                  .toString()
+                  .slice(0, -6)}
+                M {symbol}
+              </Typography>
+              <Typography variant="h5">
+                Total Supply: {coin.market_data.total_supply.toFixed(2)}{' '}
+                {coin.symbol}
+              </Typography>
+            </Stack>
           </Stack>
+
+          <SingleCoinChart coin={coin} />
         </Stack>
-      </Stack>
+      )}
     </>
   );
 };
