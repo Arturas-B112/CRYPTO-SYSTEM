@@ -47,11 +47,7 @@ const SingleCoinPage = () => {
           spacing={4}
         >
           <Stack spacing={2} alignItems="center">
-            <img
-              src={coin.image.large}
-              alt="Coin logo"
-              style={{ maxwidth: '50%' }}
-            />
+            <img src={coin.image.large} alt="Coin logo" />
             <Typography variant="h4">{coin.name}</Typography>
             <Stack>
               <Typography variant="h5">
