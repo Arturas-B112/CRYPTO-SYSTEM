@@ -34,10 +34,12 @@ const CryptoTable = ({ coins }) => {
             <tr key={coin.id}>
               <td>{coin.market_cap_rank}</td>
               <td>
-                <Stack direction="row" alignItems="center" gap={2}>
-                  <img src={coin.image} alt="Coin image" />
-                  {`${coin.name} / ${coin.symbol}`}
-                </Stack>
+                <Link to={`/coins/${coin.id}`}>
+                  <Stack direction="row" alignItems="center" gap={2}>
+                    <img src={coin.image} alt="Coin image" />
+                    {`${coin.name} / ${coin.symbol}`}
+                  </Stack>
+                </Link>
               </td>
               <td>{`${symbol} ${coin.current_price}`}</td>
               <td>
