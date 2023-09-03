@@ -59,7 +59,7 @@ const CoinsCarousel = () => {
 
   return (
     <>
-      <Typography textAlign="center" variant="h5">
+      <Typography textAlign="center" variant="h3">
         Trending coins
       </Typography>
       <AliceCarousel
