@@ -1,14 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getAllCoins } from '../../api';
+import { getAllCoins, postUserSearchedCoin } from '../../api';
 import CryptoTable from './CryptoTable';
-import {
-  Autocomplete,
-  LinearProgress,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-} from '@mui/material';
+import { Autocomplete, LinearProgress, Stack, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { CryptoState } from '../../CryptoContext';
 import CoinsCarousel from '../../components/coins-carousel/CoinsCarousel';
@@ -62,6 +55,16 @@ const CryptoMonitoringPage = () => {
     }
   };
 
+  const handleUserAction = async (body) => {
+    try {
+      await postUserSearchedCoin({
+        name: body.name,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Stack
@@ -74,10 +77,11 @@ const CryptoMonitoringPage = () => {
         <Autocomplete
           freeSolo
           options={coins}
-          getOptionLabel={(currency) => currency.name}
-          onChange={(e, currency) => {
-            if (currency) {
-              navigate(`/coins/${currency.id}`);
+          getOptionLabel={(coin) => coin.name}
+          onChange={(e, coin) => {
+            if (coin) {
+              navigate(`/coins/${coin.id}`);
+              handleUserAction(coin);
             }
           }}
           inputValue={inputValue}

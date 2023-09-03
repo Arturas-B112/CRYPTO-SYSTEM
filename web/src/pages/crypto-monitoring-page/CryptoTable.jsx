@@ -3,6 +3,7 @@ import './CryptoTable.scss';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CryptoState } from '../../CryptoContext';
+import { postUserSelectedCoin } from '../../api';
 
 const CryptoTable = ({ coins }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,6 +17,16 @@ const CryptoTable = ({ coins }) => {
 
   const handlePageChange = (e, newPage) => {
     setCurrentPage(newPage);
+  };
+
+  const handleUserAction = async (body) => {
+    try {
+      await postUserSelectedCoin({
+        name: body.name,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -34,16 +45,21 @@ const CryptoTable = ({ coins }) => {
             <tr key={coin.id}>
               <td>{coin.market_cap_rank}</td>
               <td>
-                <Link to={`/coins/${coin.id}`}>
-                  <Stack direction="row" alignItems="center" gap={2}>
-                    <img src={coin.image} alt="Coin image" />
-                    {`${coin.name} / ${coin.symbol}`}
-                  </Stack>
-                </Link>
+                <div onClick={() => handleUserAction(coin)}>
+                  <Link to={`/coins/${coin.id}`}>
+                    <Stack direction="row" alignItems="center" gap={2}>
+                      <img src={coin.image} alt="Coin image" />
+                      {`${coin.name} / ${coin.symbol}`}
+                    </Stack>
+                  </Link>
+                </div>
               </td>
               <td>{`${symbol} ${coin.current_price}`}</td>
               <td>
-                <Button variant="outlined">
+                <Button
+                  variant="outlined"
+                  onClick={() => handleUserAction(coin)}
+                >
                   <Link to={`/coins/${coin.id}`}>Details</Link>
                 </Button>
               </td>

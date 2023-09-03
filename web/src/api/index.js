@@ -17,3 +17,9 @@ export const getSingleCoinHistory = (id, days = 365, currency) =>
   axios.get(
     `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`
   );
+
+export const postUserSelectedCoin = (body) =>
+  axios.post('http://localhost:8080/selected', body);
+
+export const postUserSearchedCoin = (body) =>
+  axios.post('http://localhost:8080/searched', body);
