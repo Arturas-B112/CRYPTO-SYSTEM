@@ -34,10 +34,6 @@ const SingleCoinPage = () => {
 
   return (
     <>
-      <Stack mx={2} alignItems="flex-end">
-        <CurrencySelector />
-      </Stack>
-
       {isLoading && <LinearProgress />}
       {coin && (
         <Stack

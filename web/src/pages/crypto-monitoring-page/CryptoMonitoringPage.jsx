@@ -98,7 +98,6 @@ const CryptoMonitoringPage = () => {
             />
           )}
         />
-        <CurrencySelector />
       </Stack>
       {isLoading && <LinearProgress />}
       <CoinsCarousel />
