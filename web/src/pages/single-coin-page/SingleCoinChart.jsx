@@ -59,7 +59,6 @@ const SingleCoinChart = ({ coin }) => {
 
   const options = {
     responsive: true,
-    // maintainAspectRatio: false,
   };
 
   const data = {
