@@ -2,6 +2,10 @@
 
 Short introduction into project functionality
 
+::: warning
+Keep in mind. The free version of the API has a limited request rate (10-30/min). If no data is displayed, check the console for error code 429. If you're getting a 429 error code, it's just a matter of time to update your request rate.
+:::
+
 ## API's
 
 Used [CoinGecko](https://www.coingecko.com/en/api) API keys to get
